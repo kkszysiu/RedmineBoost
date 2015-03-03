@@ -28,65 +28,65 @@ GM_setValue = function(name, value){value = (typeof value)[0] + value; localStor
 
 //for settings
 function getStoredValue(setingName, defau) {
-	
-	if (typeof GM_getValue(setingName) != 'undefined' && GM_getValue(setingName) !== null) { 
-		return GM_getValue(setingName);
-	} else {
-		return defau;
-	}
-	
+    
+    if (typeof GM_getValue(setingName) != 'undefined' && GM_getValue(setingName) !== null) { 
+        return GM_getValue(setingName);
+    } else {
+        return defau;
+    }
+    
 }
 
 //settings
-var nameFirst 		= getStoredValue('snf', true);
-var fixedHeader		= getStoredValue('sfh', true);
-var colouredHeader	= getStoredValue('sch', true);
-var mediumAvatars 	= getStoredValue('sma', false);
-var fullName		= getStoredValue('sfn', false);
-var subtaskAsCtrlN	= getStoredValue('sns', true);
-var subtaskCollpsd	= getStoredValue('ssc', false);
-var timeLogsRemovd	= getStoredValue('tlr', true);
-var savingComEdits	= getStoredValue('sce', false);
-var newHistFotrmat	= getStoredValue('nhf', true);
-var showTimeButtons	= getStoredValue('stb', true);
+var nameFirst         = getStoredValue('snf', true);
+var fixedHeader        = getStoredValue('sfh', true);
+var colouredHeader    = getStoredValue('sch', true);
+var mediumAvatars     = getStoredValue('sma', false);
+var fullName        = getStoredValue('sfn', false);
+var subtaskAsCtrlN    = getStoredValue('sns', true);
+var subtaskCollpsd    = getStoredValue('ssc', false);
+var timeLogsRemovd    = getStoredValue('tlr', true);
+var savingComEdits    = getStoredValue('sce', false);
+var newHistFotrmat    = getStoredValue('nhf', true);
+var showTimeButtons    = getStoredValue('stb', true);
 
 //colors
 var memoryKey = 'colors2';
 function getStoredColor(taskid) {
 
-	var colors;
-	taskid = taskid.split('#')[1];
-	
-	try {
-		colors = JSON.parse(getStoredValue(memoryKey, undefined));
-	} catch (e) {
-		colors = false;
-	}
-	
-	return colors && colors['#'+taskid];
+    var colors;
+    taskid = taskid.split('#')[1];
+    
+    try {
+        colors = JSON.parse(getStoredValue(memoryKey, undefined));
+    } catch (e) {
+        colors = false;
+    }
+    
+    return colors && colors['#'+taskid];
 }
 
 function storeColor(taskid, color) {
-	
-	var colors;
-	try {
-		colors = JSON.parse(getStoredValue(memoryKey, undefined));
-	} catch (e) {
-		colors = false;
-	}
-	if (!colors) {
-		colors = {};
-	}
-	
-	colors[taskid] = color;
-	GM_setValue(memoryKey, JSON.stringify(colors));
-	//console.log(GM_getValue(memoryKey), JSON.stringify(colors));
+    
+    var colors;
+    try {
+        colors = JSON.parse(getStoredValue(memoryKey, undefined));
+    } catch (e) {
+        colors = false;
+    }
+    if (!colors) {
+        colors = {};
+    }
+    
+    colors[taskid] = color;
+    GM_setValue(memoryKey, JSON.stringify(colors));
+    //console.log(GM_getValue(memoryKey), JSON.stringify(colors));
 }
 
 //functions
 function getElementsByClassName (cn,ctx) {
     var arr = []; 
-	ctx = ctx || document;
+    ctx = ctx || document;
     var els = ctx.getElementsByTagName("*");
     var exp = new RegExp("^(.* )?"+cn+"( .*)?$", "g");
     for (var i = 0; i < els.length; i++ ){
@@ -111,13 +111,13 @@ function MD5(s) {function L(b,a){return(b<<a)|(b>>>(32-a))}function K(k,b){var F
 
 function getCsgMail(name, name1st) {
 
-	if (name.indexOf('@') > -1) {
-		return name;
-	}
+    if (name.indexOf('@') > -1) {
+        return name;
+    }
 
     var n = name;
     if (!name1st) {
-		n = n.split(' ').reverse().join(' ');
+        n = n.split(' ').reverse().join(' ');
     }
     
     return replacePL(n.replace(' ','.').toLowerCase()).replace(/[^\.a-z]/g,'') + '@cantstopgames.com';
@@ -130,38 +130,38 @@ function getGravatar(mail, size) {
 }
 
 function showSaving() {
-	var saving  = createElement('div'),
-		th		= createElement('img');
-	th.className		= 'rmSavingThrob';
-	th.src 				= '/images/loading.gif';
-	saving.id  			= 'rmSaving';
-	saving.appendChild(th);
-	saving.appendChild(document.createTextNode('Saving...'));
-	document.body.appendChild(saving);
+    var saving  = createElement('div'),
+        th        = createElement('img');
+    th.className        = 'rmSavingThrob';
+    th.src                 = '/images/loading.gif';
+    saving.id              = 'rmSaving';
+    saving.appendChild(th);
+    saving.appendChild(document.createTextNode('Saving...'));
+    document.body.appendChild(saving);
 }
 
 function getSubtaskIndent(tr) {
 
-	var r = parseInt( tr.className.substr( tr.className.indexOf('idnt-')+5, 1), 10);
-	if (isNaN(r)) {
-		r = 0;
-	}
-	return r;
+    var r = parseInt( tr.className.substr( tr.className.indexOf('idnt-')+5, 1), 10);
+    if (isNaN(r)) {
+        r = 0;
+    }
+    return r;
 }
 
 function isFirstChildOfSecond(c,p) {
-		//console.log('--------');
-	while (c.parentNode) {
-		//console.log(c.parentNode, p);
-		if (c.parentNode == p) {
-			return true;
-		} else if (c.parentNode == document.body) {
-			return false;
-		}
-		
-		c = c.parentNode;
-	}
-	return false;
+        //console.log('--------');
+    while (c.parentNode) {
+        //console.log(c.parentNode, p);
+        if (c.parentNode == p) {
+            return true;
+        } else if (c.parentNode == document.body) {
+            return false;
+        }
+        
+        c = c.parentNode;
+    }
+    return false;
 }
 
 // /functions
@@ -190,12 +190,12 @@ try {
     var s = createElement('div'), v;
     document.body.appendChild(s);
     v = '<style type="text/css">';
-	v += '.rmCell{width:14px;color:black;text-shadow:-1px -1px #fff;cursor:auto;}.rmCollapse{cursor:pointer;}';
-	v += '#rmSaving{border-bottom: 1px solid gray;position:fixed; top:0; left:0px; width:100%;line-height:30px; height:30px; text-align:center; background:white; z-index:1002;}';
-	v += '#rmSaving img{margin-right:10px;}.cmOnclicker{display:none;}';
+    v += '.rmCell{width:14px;color:black;text-shadow:-1px -1px #fff;cursor:auto;}.rmCollapse{cursor:pointer;}';
+    v += '#rmSaving{border-bottom: 1px solid gray;position:fixed; top:0; left:0px; width:100%;line-height:30px; height:30px; text-align:center; background:white; z-index:1002;}';
+    v += '#rmSaving img{margin-right:10px;}.cmOnclicker{display:none;}';
     v += '.rmServerOffline.rmNewVersionAvailable{display:none !important;} ';
     v += '.rmNewVersionAvailable{display:block !important;font-weight:bold;margin:0 30px;} ';
-	v += '#top-menu .rmNewVersionAvailable a {color:red;background:white;}';
+    v += '#top-menu .rmNewVersionAvailable a {color:red;background:white;}';
     v += '.rmbPreview{width:500px;position:fixed;left:300px;top:20px;display:none; z-index:1100;}';
     v += 'input[type="button"].butSelected{background-color:CornflowerBlue;}';
     v += '.dnone, .rmColorBoxA > div.dnone{display:none;} .dblock{display:block;}';
@@ -206,17 +206,17 @@ try {
     v += '#rmFixed > div{width:300px;text-align:center;color:black; position:absolute; top:140px; left:-144px; font-size:15px;-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);}';
     v += '.rmListAvatar, .rmListAvatarMedium{height:20px;float:left;background:no-repeat; padding-left:22px; width:115px; text-align:left;}';
     v += '.rmListAvatarMedium{height:28px; padding-left:34px; width:100px;line-height: 14px;}';
-	v += '.rmSave{margin:4px;cursor:pointer; background:#44617F; width:220px; border:1px solid #fff; height:20px;text-align:center;line-height:20px;}';
-	v += '.rmButtonSwitcher{cursor:pointer;color:#2A5685;}';
-	v += '#context-menu{z-index:1005 !important;}';
-	v += '.rmNew{color:red;background:white;}';
-	v += '.rmTimesWrapper{display:inline-block;}.rmTimesWrapper input[type="button"]{width:28px;}#time_entry_hours{width:30px;}';
-	
-	if (fullName && !mediumAvatars) {
-		v += '.rmListAvatar{width:160px;}';
-	}
-	
-	v += '.assigned_to{padding:0;} .folder{height:30px;} .folder > a{border:0 !important; height:29px;}';
+    v += '.rmSave{margin:4px;cursor:pointer; background:#44617F; width:220px; border:1px solid #fff; height:20px;text-align:center;line-height:20px;}';
+    v += '.rmButtonSwitcher{cursor:pointer;color:#2A5685;}';
+    v += '#context-menu{z-index:1005 !important;}';
+    v += '.rmNew{color:red;background:white;}';
+    v += '.rmTimesWrapper{display:inline-block;}.rmTimesWrapper input[type="button"]{width:28px;}#time_entry_hours{width:30px;}';
+    
+    if (fullName && !mediumAvatars) {
+        v += '.rmListAvatar{width:160px;}';
+    }
+    
+    v += '.assigned_to{padding:0;} .folder{height:30px;} .folder > a{border:0 !important; height:29px;}';
     v += '.rmSetSwitch{float:right;margin-right:0.5em; font-weight:bold; cursor:pointer; position:relative;} .rmSetSwitch:hover{text-decoration:underline;} .rmOpened{text-decoration:none !important;}';
     v += '.rmSettings{cursor:auto; font-family:Courier;border-top:1px solid #fff; font-size:13px;top:0px;left:-150px; position:absolute; width:604px;  background:#2C4056; }';
     v += '.optOn, .optOff { cursor:pointer;}';
@@ -230,17 +230,17 @@ try {
     v += '#context-menu a.rmColorBoxA:hover > div.rmColorPicker{display:inline-block;}';
     
     if (fixedHeader) {
-		v += '#quick-search{padding-right:17px;}';
-		v += '#account{padding-right:11px;}';
+        v += '#quick-search{padding-right:17px;}';
+        v += '#account{padding-right:11px;}';
         v += '#wrapper2{padding-top:87px;}';
         v += '#top-menu{position: fixed !important; top:0em;width:99%;}';
         v += '#header{position: fixed !important; top:1.6em;width:99%;border-bottom:6px solid #eee;} ';
     }
     
-	if (newHistFotrmat) {
-		v += '#history h4{width:230px; float:left; margin:0; padding:0;}';
-		v += '#history .journal{margin:0; padding:0; }';
-		v += '#history .details{width:auto; margin:0; padding:0 0 0 240px;}';
+    if (newHistFotrmat) {
+        v += '#history h4{width:230px; float:left; margin:0; padding:0;}';
+        v += '#history .journal{margin:0; padding:0; }';
+        v += '#history .details{width:auto; margin:0; padding:0 0 0 240px;}';
         v += '#history h4 img.gravatar{border:#eee solid; border-width:0 1px 1px 1px; margin:0 0 1px; float:left;}';
         v += '#history h4 .rmHistoryDiv{ float:left; margin-left:7px; width: 170px;}';
         v += '#history h4 .rmHistoryDiv .rmDate{color:#444;} #history h4 div .rmDate:hover{color:#C61A1A;}';
@@ -256,10 +256,10 @@ try {
         v += '#history .rmHistoryShort h4 img{height:28px; opacity:0.5;margin: 0 2px; border:0;}';
         v += '#history .rmHistoryShort .rmArchiver{display:none;}';
         v += '#history div.wiki pre{margin-left:225px;}';
-		v += '#history blockquote{margin-left: 250px;} #history div.rmHistoryDivOdd blockquote,#history > div:hover blockquote{border-color:#bbb;}';
-		v += '#history blockquote blockquote{margin-left:10px;} #history blockquote p {padding-left:10px;}';
+        v += '#history blockquote{margin-left: 250px;} #history div.rmHistoryDivOdd blockquote,#history > div:hover blockquote{border-color:#bbb;}';
+        v += '#history blockquote blockquote{margin-left:10px;} #history blockquote p {padding-left:10px;}';
     }
-	
+    
     v += '</style>';
     s.innerHTML = v;
 
@@ -281,8 +281,8 @@ try {
         numb = '';
     }
 
-	if (subj) {	subj.innerHTML = numb + ' ' + subj.innerHTML.replace("'",'`'); }
-    if (titl) {	titl.innerHTML = numb + ' ' + titl.innerHTML; }
+    if (subj) {    subj.innerHTML = numb + ' ' + subj.innerHTML.replace("'",'`'); }
+    if (titl) {    titl.innerHTML = numb + ' ' + titl.innerHTML; }
     
 } catch(e) {console.log(e);}
 
@@ -319,41 +319,41 @@ try {
 //shortcuts
 try {
     
-    var SPECIAL_KEYS 	= {shift:0, ctrl:0, alt:0},
-        updateDiv   	= getById('update'),
-        searchField 	= getById('q');
+    var SPECIAL_KEYS     = {shift:0, ctrl:0, alt:0},
+        updateDiv       = getById('update'),
+        searchField     = getById('q');
 
     function showEdit(withMore) {
 
         if (updateDiv) {
-		
-			if (withMore) {
-				var more = getById('issue_description_and_toolbar');
-				more.style.display = 'block';
-			}
-			
-			updateDiv.style.display = 'block';
-			window.scrollTo(0, parseInt(updateDiv.offsetTop - 100,10));
+        
+            if (withMore) {
+                var more = getById('issue_description_and_toolbar');
+                more.style.display = 'block';
+            }
+            
+            updateDiv.style.display = 'block';
+            window.scrollTo(0, parseInt(updateDiv.offsetTop - 100,10));
 
-			return false;
-		}
-		
-		return true;
+            return false;
+        }
+        
+        return true;
     }
-	
-	function showUpdateTimeLogs() {
+    
+    function showUpdateTimeLogs() {
 
-		var teh_ = getById('time_entry_hours');
+        var teh_ = getById('time_entry_hours');
         if (teh_ && updateDiv) {
-		
-			updateDiv.style.display = 'block';
-			teh_.focus();
-			window.scrollTo(0, parseInt(teh_.offsetTop - 100,10));
+        
+            updateDiv.style.display = 'block';
+            teh_.focus();
+            window.scrollTo(0, parseInt(teh_.offsetTop - 100,10));
 
-			return false;
-		}
-		
-		return true;
+            return false;
+        }
+        
+        return true;
     }
     
 function KeyCheckUp(e) {
@@ -376,36 +376,36 @@ function KeyCheckUp(e) {
    
 function searchForCommentAndSaveOne() {
 
-	if (savingComEdits) {
-	
-		var res = false;
-		
-		try {
-		
-			var history = getById('history').getElementsByTagName('form');
-		
-			//if there is more than one don`t know which save
-			if (history.length == 1) {
-				
-				var form = history[0];
-				form.submit();
-				
-				res = true;
-			
-			}
-			
-		} catch (e) {
-			res = false;
-		}
+    if (savingComEdits) {
+    
+        var res = false;
+        
+        try {
+        
+            var history = getById('history').getElementsByTagName('form');
+        
+            //if there is more than one don`t know which save
+            if (history.length == 1) {
+                
+                var form = history[0];
+                form.submit();
+                
+                res = true;
+            
+            }
+            
+        } catch (e) {
+            res = false;
+        }
 
-	} else {
-		res = false;
-	}
-	
-	return res;
-	
+    } else {
+        res = false;
+    }
+    
+    return res;
+    
 }  
-	
+    
 function KeyCheckDown(e) {
 
     var path    = [],
@@ -418,10 +418,10 @@ function KeyCheckDown(e) {
     path = path.join(" ");
     //console.log(path);
 
-	SPECIAL_KEYS.meta 	= 0 + e.metaKey;
-	SPECIAL_KEYS.ctrl 	= 0 + e.ctrlKey;
-	SPECIAL_KEYS.alt 	= 0 + e.altKey;
-	SPECIAL_KEYS.shift 	= 0 + e.shiftaKey;
+    SPECIAL_KEYS.meta     = 0 + e.metaKey;
+    SPECIAL_KEYS.ctrl     = 0 + e.ctrlKey;
+    SPECIAL_KEYS.alt     = 0 + e.altKey;
+    SPECIAL_KEYS.shift     = 0 + e.shiftaKey;
     
     if (!SPECIAL_KEYS.shift && !SPECIAL_KEYS.ctrl && !SPECIAL_KEYS.alt) {
         if (path.indexOf('update') > -1             ||
@@ -440,7 +440,7 @@ function KeyCheckDown(e) {
     var keyShortcut = '' + String.fromCharCode(e.keyCode).replace(' ','').toLowerCase();
    
     //numbers detect
-	
+    
     if ( (e.keyCode >= 48 && e.keyCode < 57 ) ||
          (e.keyCode >= 96 && e.keyCode < 105)
     ) {
@@ -465,19 +465,19 @@ function KeyCheckDown(e) {
                     }
                     
                     break;
-		case 'c':   if (updateDiv) {
-		
+        case 'c':   if (updateDiv) {
+        
                         showEdit(0);
-						getById('notes').focus();
-						//.focus();
-						
+                        getById('notes').focus();
+                        //.focus();
+                        
                     }
                     
                     break;
-		case 'm':   showEdit(1);  			break;
-		case 'k':   showUpdateTimeLogs();  	break;
-        case 'l':   location.href = getElementsByClassName('icon-time-add')[0].href;  	break;
-        case 'n':   location.href = getElementsByClassName('new-issue')[0].href;  		break;
+        case 'm':   showEdit(1);              break;
+        case 'k':   showUpdateTimeLogs();      break;
+        case 'l':   location.href = getElementsByClassName('icon-time-add')[0].href;      break;
+        case 'n':   location.href = getElementsByClassName('new-issue')[0].href;          break;
         case 'r':   
                     var relation = getById('new-relation-form');
             
@@ -505,24 +505,24 @@ function KeyCheckDown(e) {
         
         case 's+CTRL':
         case 's+META':
-			
-			//first try to save comment
-			var saveComment = searchForCommentAndSaveOne();
-			
-			if (!saveComment) {
-				try { getById('issue-form').submit(); showSaving(); } catch (e) {console.log(e);}
-				try { getById('move_form').submit();  showSaving(); } catch (e) {console.log(e);}
-			}
+            
+            //first try to save comment
+            var saveComment = searchForCommentAndSaveOne();
+            
+            if (!saveComment) {
+                try { getById('issue-form').submit(); showSaving(); } catch (e) {console.log(e);}
+                try { getById('move_form').submit();  showSaving(); } catch (e) {console.log(e);}
+            }
 
         break;        
-		case 'n+CTRL':
-		case 'n+META':
-		
-			if (subtaskAsCtrlN) {
-				var newSub = getById('issue_tree').getElementsByTagName('a')[0];
-				location.href = newSub.href;
-			}
-			
+        case 'n+CTRL':
+        case 'n+META':
+        
+            if (subtaskAsCtrlN) {
+                var newSub = getById('issue_tree').getElementsByTagName('a')[0];
+                location.href = newSub.href;
+            }
+            
         break;
         default:
         //console.log(33);
@@ -545,32 +545,32 @@ document.onkeydown = function(e) {KeyCheckDown(e);};
 
 //fix  scroll to when fixed header is turned on
 try {
-	
-	if (fixedHeader) {
-	
-		var elems = getElementsByClassName('icon-edit');
-		for (var i = 0, ci = elems.length; i < ci; ++i) {
-			elems[i].onclick = function(){return showEdit(0);};
-		}
-	
-	}
-	
+    
+    if (fixedHeader) {
+    
+        var elems = getElementsByClassName('icon-edit');
+        for (var i = 0, ci = elems.length; i < ci; ++i) {
+            elems[i].onclick = function(){return showEdit(0);};
+        }
+    
+    }
+    
 } catch(e) {console.log(e);}
 
 //update checker
 try {
 
     var updateUrl   = 'http://hrabstwo.net/hornet/js/' + ver,
-		aliveUrl    = 'http://hrabstwo.net/hornet/js/redminebooster.alive.gif',
+        aliveUrl    = 'http://hrabstwo.net/hornet/js/redminebooster.alive.gif',
         fileUrl     = 'http://hrabstwo.net/hornet/js/redmineboost.user.js',
         scr         = createElement('div');
         
     getById('top-menu').appendChild(scr);
 
     scr.innerHTML = '<div class="dnone">' +
-					'<a href="' + fileUrl + '">Download RedmineBoost update (click & install)!</a></div>' +
-					'<img class="dnone" src="' + aliveUrl  + '" onerror="this.parentNode.firstChild.className+=\' rmServerOffline\';" >' +
-					'<img class="dnone" src="' + updateUrl + '" onerror="this.parentNode.firstChild.className+=\' rmNewVersionAvailable\';" >';
+                    '<a href="' + fileUrl + '">Download RedmineBoost update (click & install)!</a></div>' +
+                    '<img class="dnone" src="' + aliveUrl  + '" onerror="this.parentNode.firstChild.className+=\' rmServerOffline\';" >' +
+                    '<img class="dnone" src="' + updateUrl + '" onerror="this.parentNode.firstChild.className+=\' rmNewVersionAvailable\';" >';
 
 }catch(e){console.log(e);}
 
@@ -584,10 +584,10 @@ function orderSelect(selectElemID) {
         op,
         oa  = [];
         
-	if (se) {
-		op = se.getElementsByTagName('option');
-	}
-		
+    if (se) {
+        op = se.getElementsByTagName('option');
+    }
+        
     for (var i in op) {
         if (op[i].nodeName) {
             oa.push(op[i]);
@@ -619,11 +619,11 @@ function orderSelect(selectElemID) {
             
         } catch(e){}
             
-		if (oa[i].innerHTML.indexOf('RTT') > -1) {
-			oa[i].parentNode.removeChild(oa[i]);
-		} else {
-			se.appendChild(oa[i]);
-		}
+        if (oa[i].innerHTML.indexOf('RTT') > -1) {
+            oa[i].parentNode.removeChild(oa[i]);
+        } else {
+            se.appendChild(oa[i]);
+        }
         
     }
 
@@ -636,13 +636,13 @@ var allButtonsGlob = {};
 try{
 
     function cutName(name, revert) {
-		
+        
         var tmp, tmp2;
-		
-		if (name.match(/>>/)) {
-			return name;
-		}
-		
+        
+        if (name.match(/>>/)) {
+            return name;
+        }
+        
         tmp = name.split(' ');
         
         if (revert) {
@@ -661,20 +661,20 @@ try{
 
     function select2button(selectIDDD, avatars) {
         
-		try{
-		
+        try{
+        
         ////
         var swch        = createElement('span'),
             userid      = getById('loggedas').getElementsByTagName('a')[0].innerHTML,
             selme       = getById(selectIDDD),
             GM_key      = selectIDDD + '_gm_key';
             
-		} catch (e) {console.log(e);}
-	
+        } catch (e) {console.log(e);}
+    
         allButtonsGlob[selectIDDD]  = GM_getValue(GM_key);
 
         //switcher
-		swch.className = 'rmButtonSwitcher';
+        swch.className = 'rmButtonSwitcher';
         swch.title     = 'list / buttons';
         swch.innerHTML = allButtonsGlob[selectIDDD] == 1 ? ' [ ]' : ' [#]';
         swch.onclick = (function(selectIDDD, allButtonsGlob) { 
@@ -688,12 +688,12 @@ try{
                 swch.innerHTML = allButtonsGlob[selectIDDD] == 1 ? ' [ ]' : ' [#]';
                 
             };
-			
+            
         })(selectIDDD,allButtonsGlob);
         
         if (selme) {
-			selme.previousElementSibling.appendChild(swch);
-		}
+            selme.previousElementSibling.appendChild(swch);
+        }
 
         function buttonize(selectID, onlyme) {
         
@@ -704,29 +704,29 @@ try{
             if (typeof onlyme == 'undefined') {
                 onlyme = false;
             }
-			
-			if (!selme) {
-				return;
-			}
+            
+            if (!selme) {
+                return;
+            }
                 
             if (!cont) {
             
-                cont 	= createElement('span');
+                cont     = createElement('span');
                 cont.id = contName;
                 for (var i = 0; i < selme.childNodes.length; ++i) {
                 
                     var opt = selme.childNodes[i], 
-						el,
-						optVal;
-						
+                        el,
+                        optVal;
+                        
                     if (opt.nodeName != 'OPTION') {
                         continue;
                     }
                 
                     el = createElement('input');
                     
-					optVal = opt.innerHTML.replace(/&gt;/g, '>').replace(/&lt;/g, '<');
-					
+                    optVal = opt.innerHTML.replace(/&gt;/g, '>').replace(/&lt;/g, '<');
+                    
                     el.type  = 'button';
                     el.title = (selectID == 'issue_assigned_to_id') ? optVal : '';
                     el.value = (selectID == 'issue_assigned_to_id') ? cutName(optVal) : optVal;
@@ -734,10 +734,10 @@ try{
                     
                     if (avatars && opt.innerHTML !== '') {
                     
-						if (optVal.match(/<</)) {
-							optVal = userid;
-						}
-						
+                        if (optVal.match(/<</)) {
+                            optVal = userid;
+                        }
+                        
                         el.className = 'asi';
                         el.style.cssText = 'background-image:url(' + getGravatar( getCsgMail(optVal, nameFirst) ) + ')';
     
@@ -757,7 +757,7 @@ try{
                 
                 selme.parentNode.appendChild(cont);
                 selme.parentNode.onclick = function (e) {
-					
+                    
                      if (e.target.nodeName == 'INPUT') {
             
                         for (var i = 0; i < cont.childNodes.length; ++i) {
@@ -770,15 +770,15 @@ try{
 
                         for (var i = 0; i < selme.childNodes.length; ++i) {
                             
-							if (selme.childNodes[i].nodeName != 'OPTION') {
-								continue;
-							}
-							
+                            if (selme.childNodes[i].nodeName != 'OPTION') {
+                                continue;
+                            }
+                            
                             if (selme.childNodes[i].value == e.target.rel) {
-							
+                            
                                 selme.childNodes[i].selected = "selected";
                                 e.target.className += ' butSelected';
-								
+                                
                             } else {
                                 selme.childNodes[i].removeAttribute('selected');
                             }
@@ -800,15 +800,15 @@ try{
             
         }
         
-		
+        
         buttonize(selectIDDD, allButtonsGlob[selectIDDD]);
         
     }
     
     function s2b() {
     
-		orderSelect('issue_assigned_to_id');
-	
+        orderSelect('issue_assigned_to_id');
+    
         //select2button('issue_done_ratio');
         select2button('issue_status_id');
         select2button('issue_priority_id');
@@ -817,160 +817,160 @@ try{
         //procent wykonania - button 100%
         var but100 = createElement('input'),
             sel100 = getById('issue_done_ratio');
-			
+            
         if (sel100) {
-		
-			but100.type  = 'button';
-			but100.value = '100%';
-			but100.onclick = function(){
-				sel100.childNodes[sel100.childNodes.length-1].selected = "selected";
-			};
-			sel100.parentNode.appendChild(but100);
-			
-		}	
+        
+            but100.type  = 'button';
+            but100.value = '100%';
+            but100.onclick = function(){
+                sel100.childNodes[sel100.childNodes.length-1].selected = "selected";
+            };
+            sel100.parentNode.appendChild(but100);
+            
+        }    
         
     }
     
     s2b();
     
-	//additional selects change while changing tracker (in new issue)
-	var iti = getById('issue_tracker_id');
-	if (iti) {
-	
-		iti.onchange = function() {
-			setTimeout(s2b, 900);
-		};
-		
+    //additional selects change while changing tracker (in new issue)
+    var iti = getById('issue_tracker_id');
+    if (iti) {
+    
+        iti.onchange = function() {
+            setTimeout(s2b, 900);
+        };
+        
     }
-	
+    
 }catch(e){console.log(e);}
 
 //test if is blocked, duplicated or test_dev_wait
 try {
 
-    var isBlocked   	= false,
-        isDuplicate 	= false,
-        isTestDevWait 	= false,
-        rels 			= getById('relations'),
-		h2 				= getById('content').getElementsByTagName('h2')[0],
-		dp;
-		
-	if (rels) {
-		
-		var trs = rels.getElementsByTagName('tr'),
-			a,
-		    tds;
-			
-		for (var i = 0, ci = trs.length; i < ci; i++) {
-			
-			tds = trs[i].getElementsByTagName('td');
-			a   = tds[1].getElementsByTagName('a')[0];
-			
-			if (tds[1].innerHTML.match(/.*(blocked by|zablokowane przez).*/) &&
-				a.className.indexOf('closed') == -1
-			) {
-				isBlocked = true;
-			}
-			
-			if (tds[1].innerHTML.match(/.*(duplicates|duplikuje).*/)) {
-				isDuplicate = true;
-			}
-		
-		}
-			
-		if (isBlocked) {
-			
-			var bl = createElement('div');
-			dp = createElement('div');
-			h2.className = 'rmH2Improved';
-			h2.appendChild(bl);
-			bl.className = 'rmBlocker';
-			bl.innerHTML = 'BLOCKED!';
-			
-		}
-		
-		if (isDuplicate) {
-			
-			dp = createElement('div');
-			h2.className = 'rmH2Improved';
-			h2.appendChild(dp);
-			dp.className = 'rmDuplikat';
-			dp.innerHTML = 'DUPLICATE';
-			
-		}
-		
-	}
-	
-	//suspended status
-	var status = document.getElementsByTagName('td'),
-		cs = status.length;
-			
-	for (var q = 0; q < cs; ++q) {
-	
-		var parentQth = status[q].parentNode.getElementsByTagName('th');
-		if (status[q].className == 'status' && parentQth.length) {
-		
-			if (status[q].innerHTML.match(/.*(suspended).*/i) ) {
-			
-				isTestDevWait = true;
-				break;
-				
-			}
-		
-		}
-		
-	}
-		
-	if (isTestDevWait) {
-		
-		dp = createElement('div');
-		h2.className = 'rmH2Improved';
-		h2.appendChild(dp);
-		dp.className = 'rmTestDevWait';
-		dp.innerHTML = 'SUSPENDED';
-		
-	}
+    var isBlocked       = false,
+        isDuplicate     = false,
+        isTestDevWait     = false,
+        rels             = getById('relations'),
+        h2                 = getById('content').getElementsByTagName('h2')[0],
+        dp;
+        
+    if (rels) {
+        
+        var trs = rels.getElementsByTagName('tr'),
+            a,
+            tds;
+            
+        for (var i = 0, ci = trs.length; i < ci; i++) {
+            
+            tds = trs[i].getElementsByTagName('td');
+            a   = tds[1].getElementsByTagName('a')[0];
+            
+            if (tds[1].innerHTML.match(/.*(blocked by|zablokowane przez).*/) &&
+                a.className.indexOf('closed') == -1
+            ) {
+                isBlocked = true;
+            }
+            
+            if (tds[1].innerHTML.match(/.*(duplicates|duplikuje).*/)) {
+                isDuplicate = true;
+            }
+        
+        }
+            
+        if (isBlocked) {
+            
+            var bl = createElement('div');
+            dp = createElement('div');
+            h2.className = 'rmH2Improved';
+            h2.appendChild(bl);
+            bl.className = 'rmBlocker';
+            bl.innerHTML = 'BLOCKED!';
+            
+        }
+        
+        if (isDuplicate) {
+            
+            dp = createElement('div');
+            h2.className = 'rmH2Improved';
+            h2.appendChild(dp);
+            dp.className = 'rmDuplikat';
+            dp.innerHTML = 'DUPLICATE';
+            
+        }
+        
+    }
+    
+    //suspended status
+    var status = document.getElementsByTagName('td'),
+        cs = status.length;
+            
+    for (var q = 0; q < cs; ++q) {
+    
+        var parentQth = status[q].parentNode.getElementsByTagName('th');
+        if (status[q].className == 'status' && parentQth.length) {
+        
+            if (status[q].innerHTML.match(/.*(suspended).*/i) ) {
+            
+                isTestDevWait = true;
+                break;
+                
+            }
+        
+        }
+        
+    }
+        
+    if (isTestDevWait) {
+        
+        dp = createElement('div');
+        h2.className = 'rmH2Improved';
+        h2.appendChild(dp);
+        dp.className = 'rmTestDevWait';
+        dp.innerHTML = 'SUSPENDED';
+        
+    }
 
 } catch(e){console.log(e);}
 
 //add colored box with name of project
 try {
     
-	if (colouredHeader) {
-	
-		var proj = getById('quick-search').getElementsByTagName('option'),
-			hd   = getById('header'),
-			hdmargin 	= createElement('div'),
-			fii  		= createElement('div');
-			
-		hdmargin.className = 'rmHdmargin';
-		hd.appendChild(hdmargin);
-			
-		for (var i = 0, ci = proj.length; i < ci; ++i) {
-			
-			if (proj[i].selected && proj[i].value !== '') {
-				
-				fii.innerHTML = proj[i].innerHTML;
-				hd.style = '';
-				hd.style.backgroundColor = '#'+ intToARGB(fii.innerHTML);
-				//-alert(MD5(fii.innerHTML));
-				break;
-				
-			}
-			
-		}
-		
-	}
+    if (colouredHeader) {
+    
+        var proj = getById('quick-search').getElementsByTagName('option'),
+            hd   = getById('header'),
+            hdmargin     = createElement('div'),
+            fii          = createElement('div');
+            
+        hdmargin.className = 'rmHdmargin';
+        hd.appendChild(hdmargin);
+            
+        for (var i = 0, ci = proj.length; i < ci; ++i) {
+            
+            if (proj[i].selected && proj[i].value !== '') {
+                
+                fii.innerHTML = proj[i].innerHTML;
+                hd.style = '';
+                hd.style.backgroundColor = '#'+ intToARGB(fii.innerHTML);
+                //-alert(MD5(fii.innerHTML));
+                break;
+                
+            }
+            
+        }
+        
+    }
 
 } catch(e){console.log(e);}
 
 //avatars on issues list & assignee modifications && collapsing nested tasks
 try {
 
-    var preissues 	= getElementsByClassName('issues'),
-		collapsable	= [],
-        issues 		= [],
-        td 			= [];
+    var preissues     = getElementsByClassName('issues'),
+        collapsable    = [],
+        issues         = [],
+        td             = [];
         
     for (var i in preissues) {
         
@@ -980,462 +980,462 @@ try {
         
     }
     
-	//priority colors on subtask list
-	try {
-	
-		var col = getElementsByClassName('subject'),
-			cit = 0;
-		
-		for (var k in col) {
-		
-			var ahr = col[k].getElementsByTagName('a'),
-				prn = col[k].parentNode,
-				cla,
-				claPrior;
-				
-			if (ahr[0]) {
-			
-				cla = ahr[0].className;
-				claPrior = cla.match(/priority-[0-9]/gi);
-				if (claPrior && claPrior[0]) {
-					prn.className += ' ' + claPrior[0] + (cit%2 ? ' odd' : ' even');
-				}
-			
-			}
-			
-			cit++;
-		}
-		
+    //priority colors on subtask list
+    try {
+    
+        var col = getElementsByClassName('subject'),
+            cit = 0;
+        
+        for (var k in col) {
+        
+            var ahr = col[k].getElementsByTagName('a'),
+                prn = col[k].parentNode,
+                cla,
+                claPrior;
+                
+            if (ahr[0]) {
+            
+                cla = ahr[0].className;
+                claPrior = cla.match(/priority-[0-9]/gi);
+                if (claPrior && claPrior[0]) {
+                    prn.className += ' ' + claPrior[0] + (cit%2 ? ' odd' : ' even');
+                }
+            
+            }
+            
+            cit++;
+        }
+        
     } catch(e){console.log('priority colors on subtask list', e);}
-	
-	//avatars
-	try {
-	
-		var col = /*issues[j].*/getElementsByClassName('assigned_to');
-		for (var k in col) {
-		
-			var ahr = col[k].getElementsByTagName('a'),
-				dv,
-				name;
-				
-			if (ahr[0]) {
-			
-				name = ahr[0].firstChild.textContent;
-				dv = createElement('div');
-				dv.className = 'rmListAvatar' + (mediumAvatars ? 'Medium' : '');
-				dv.style = '';
-				
-				if (fullName) {
-					if (mediumAvatars) {
-						dv.innerHTML = name.replace(/\s/, '<br>');
-					} else {
-						dv.innerHTML = name;
-					}
-				} else {
-					dv.innerHTML = cutName(name, !nameFirst );
-				}
+    
+    //avatars
+    try {
+    
+        var col = /*issues[j].*/getElementsByClassName('assigned_to');
+        for (var k in col) {
+        
+            var ahr = col[k].getElementsByTagName('a'),
+                dv,
+                name;
+                
+            if (ahr[0]) {
+            
+                name = ahr[0].firstChild.textContent;
+                dv = createElement('div');
+                dv.className = 'rmListAvatar' + (mediumAvatars ? 'Medium' : '');
+                dv.style = '';
+                
+                if (fullName) {
+                    if (mediumAvatars) {
+                        dv.innerHTML = name.replace(/\s/, '<br>');
+                    } else {
+                        dv.innerHTML = name;
+                    }
+                } else {
+                    dv.innerHTML = cutName(name, !nameFirst );
+                }
 
-				dv.style.backgroundImage = 'url(' + getGravatar( getCsgMail(name,1), mediumAvatars ? 28 : 20 ) + ')';
-				ahr[0].innerHTML = '';
-				ahr[0].appendChild(dv);
-			
-			}
-			
-		}
-		
+                dv.style.backgroundImage = 'url(' + getGravatar( getCsgMail(name,1), mediumAvatars ? 28 : 20 ) + ')';
+                ahr[0].innerHTML = '';
+                ahr[0].appendChild(dv);
+            
+            }
+            
+        }
+        
     } catch(e){console.log('avatars', e);}
     
-	//collapsing nested tasks
-	try{
-	
-		var lastGroupColor = [],
-			lastGroupIndex = 0,
-			curGroupIndex  = 0;
-			
-		for (var k in issues) {
-		
-			var tb,
-				withTHead,
-				tbody = issues[k].getElementsByTagName('tbody'),
-				thead = issues[k].getElementsByTagName('thead');
-				
-			if (thead.length) {
-				break; //as return
-			} else {
-			
-				tb 			= issues[k].rows;
-				withTHead 	= false;
-				
-			}
-		
-			for (var u = 0, cu = tb.length; u < cu; ++u) {
-				
-				if (tb[u] && 
-					tb[u].nodeName && 
-					tb[u].nodeName.toLowerCase() == 'tr'
-				) {
-				
-					var cell 	= tb[u].insertCell(1),
-						taskno = /*tb[u].*/getElementsByClassName('subject', tb[u])[0].getElementsByTagName('a')[0].innerHTML;
-					
-					cell.className = 'rmCell';
-					curGroupIndex = getSubtaskIndent(tb[u]);
-					
-					var md5_1 = getStoredColor(taskno);
-						
-					if (taskno.toLowerCase().indexOf('group') 	> -1 ||
-						taskno.toLowerCase().indexOf('feature') > -1
-					) {
-					
-						if (curGroupIndex > lastGroupIndex+1) {
-							lastGroupColor = [];
-						} else if (curGroupIndex == lastGroupIndex) {
-							lastGroupColor.shift();
-						}						
-					
-						var m5 = md5_1 || '#' + MD5(taskno).substring(0,6);
-						lastGroupColor.unshift(m5);
-						lastGroupIndex = curGroupIndex;
-						cell.innerHTML = '-';
-						cell.className += ' rmCollapse rmGOpen';
-						cell.style.background = lastGroupColor[0];
-						
-						if (subtaskCollpsd) {
-							collapsable.unshift(tb[u]);
-						}
-						
-					} else {
-						
-						if (curGroupIndex == lastGroupIndex) {
-							lastGroupColor.shift();
-						}		
-					
-						if (curGroupIndex >= lastGroupIndex) {
-							var m5 = md5_1 || lastGroupColor[0];
-							cell.style.background = m5;
-						}
-						
-					}
-					
-				}
-				
-			}
-			
-		}
-		
-	} catch(e){console.log('collapsing nested tasks', e);}	
-	
-	function changeRowsState(startRow, idntClassIndex, close) {
-	
-		try {
-		
-			var n,
-				lastParentIsOpen = [(startRow.getElementsByTagName('td')[1].className.indexOf('rmGOpen') == -1) || !close],
-				lastParentIndex;
-	
-			while (n = startRow.nextSibling) {
-			
-				startRow = n;
-				if (n.nodeName.toLowerCase() != 'tr') {
-					continue;
-					
-				} else if (n.className.indexOf('idnt-') > -1) {
+    //collapsing nested tasks
+    try{
+    
+        var lastGroupColor = [],
+            lastGroupIndex = 0,
+            curGroupIndex  = 0;
+            
+        for (var k in issues) {
+        
+            var tb,
+                withTHead,
+                tbody = issues[k].getElementsByTagName('tbody'),
+                thead = issues[k].getElementsByTagName('thead');
+                
+            if (thead.length) {
+                break; //as return
+            } else {
+            
+                tb             = issues[k].rows;
+                withTHead     = false;
+                
+            }
+        
+            for (var u = 0, cu = tb.length; u < cu; ++u) {
+                
+                if (tb[u] && 
+                    tb[u].nodeName && 
+                    tb[u].nodeName.toLowerCase() == 'tr'
+                ) {
+                
+                    var cell     = tb[u].insertCell(1),
+                        taskno = /*tb[u].*/getElementsByClassName('subject', tb[u])[0].getElementsByTagName('a')[0].innerHTML;
+                    
+                    cell.className = 'rmCell';
+                    curGroupIndex = getSubtaskIndent(tb[u]);
+                    
+                    var md5_1 = getStoredColor(taskno);
+                        
+                    if (taskno.toLowerCase().indexOf('group')     > -1 ||
+                        taskno.toLowerCase().indexOf('feature') > -1
+                    ) {
+                    
+                        if (curGroupIndex > lastGroupIndex+1) {
+                            lastGroupColor = [];
+                        } else if (curGroupIndex == lastGroupIndex) {
+                            lastGroupColor.shift();
+                        }                        
+                    
+                        var m5 = md5_1 || '#' + MD5(taskno).substring(0,6);
+                        lastGroupColor.unshift(m5);
+                        lastGroupIndex = curGroupIndex;
+                        cell.innerHTML = '-';
+                        cell.className += ' rmCollapse rmGOpen';
+                        cell.style.background = lastGroupColor[0];
+                        
+                        if (subtaskCollpsd) {
+                            collapsable.unshift(tb[u]);
+                        }
+                        
+                    } else {
+                        
+                        if (curGroupIndex == lastGroupIndex) {
+                            lastGroupColor.shift();
+                        }        
+                    
+                        if (curGroupIndex >= lastGroupIndex) {
+                            var m5 = md5_1 || lastGroupColor[0];
+                            cell.style.background = m5;
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    } catch(e){console.log('collapsing nested tasks', e);}    
+    
+    function changeRowsState(startRow, idntClassIndex, close) {
+    
+        try {
+        
+            var n,
+                lastParentIsOpen = [(startRow.getElementsByTagName('td')[1].className.indexOf('rmGOpen') == -1) || !close],
+                lastParentIndex;
+    
+            while (n = startRow.nextSibling) {
+            
+                startRow = n;
+                if (n.nodeName.toLowerCase() != 'tr') {
+                    continue;
+                    
+                } else if (n.className.indexOf('idnt-') > -1) {
 
-					//get idnt index
-					var ii 			= getSubtaskIndent(n),
-						td1			= n.getElementsByTagName('td')[1].className,
-						isCollapseRow 	= td1.indexOf('rmCollapse') > -1,
-						isOpenRow 		= td1.indexOf('rmGOpen') 	> -1; 		//is open = has class rmGOpen
-					
-					if (ii <= lastParentIndex) {
-						lastParentIsOpen.shift();
-					}
-					
-					if (isCollapseRow) {
-						lastParentIsOpen.unshift(isOpenRow);
-						lastParentIndex  = ii;
-					}
-				
-					
-					if (ii == idntClassIndex && ii != 1) {break;}
-					
-					//if row has grater or equal indent than current - only descendants and ~siblings~
-					if (ii >= idntClassIndex ) {
-						
-						if ((isCollapseRow 
-							&& lastParentIsOpen[1] == true 
-							)
-							|| //it is group
-							(					//it is not a group &&parent is open
-								!isCollapseRow &&
-								lastParentIsOpen[0] == true
-							)
-						) {
-							
-							//if element is visible
-							if (!n.style.display) {
-								n.style.display = 'none';
-							} else if (!close) {
-								n.style.display = '';
-							}
-							
-						}
-						
-					} else {
-						break;
-					}
-					
-				} else {
-					break;
-				}
-				
-			}
-			
-		}catch(e){console.log('changeRowsState',e);}
-		
-	}
-	
-	function collapsing (e) {
-	
-		try{
-	
-			var tg 	 = e.target,
-				cn 	 = tg.className,
-				close = (cn.indexOf('rmGOpen') > -1);
-			
-			if (cn.indexOf('rmCell') > -1) {
-			
-				if (cn.indexOf('rmCollapse') > -1) {
-				 
-					if (close) {
-						tg.className = cn.replace('rmGOpen','');
-						tg.innerHTML = '+';
-					} else {
-						tg.className += ' rmGOpen';
-						tg.innerHTML = '-';
-					}
-				
-					//subtaski
-					if (tg.parentNode.className.indexOf('idnt-') > -1 ) {
-						changeRowsState(
-							e.target.parentNode, 
-							getSubtaskIndent(tg.parentNode),
-							close
-						)
-					} 
-					//top task
-					else {
-						changeRowsState(e.target.parentNode, 1, close)
-					}
-					
-				}
-			
-				e.stopPropagation();
-			}
-		
-		}catch(e){console.log('collapsing', e);}
-	
-	}
-	
-	document.body.addEventListener('click', collapsing, false);
-	
-	//collapse by default
-	if (subtaskCollpsd) {
-	
-		for (var k in collapsable) {
-			collapsable[k].getElementsByTagName('td')[1].click();
-		}
-		
-	}
-	
+                    //get idnt index
+                    var ii             = getSubtaskIndent(n),
+                        td1            = n.getElementsByTagName('td')[1].className,
+                        isCollapseRow     = td1.indexOf('rmCollapse') > -1,
+                        isOpenRow         = td1.indexOf('rmGOpen')     > -1;         //is open = has class rmGOpen
+                    
+                    if (ii <= lastParentIndex) {
+                        lastParentIsOpen.shift();
+                    }
+                    
+                    if (isCollapseRow) {
+                        lastParentIsOpen.unshift(isOpenRow);
+                        lastParentIndex  = ii;
+                    }
+                
+                    
+                    if (ii == idntClassIndex && ii != 1) {break;}
+                    
+                    //if row has grater or equal indent than current - only descendants and ~siblings~
+                    if (ii >= idntClassIndex ) {
+                        
+                        if ((isCollapseRow 
+                            && lastParentIsOpen[1] == true 
+                            )
+                            || //it is group
+                            (                    //it is not a group &&parent is open
+                                !isCollapseRow &&
+                                lastParentIsOpen[0] == true
+                            )
+                        ) {
+                            
+                            //if element is visible
+                            if (!n.style.display) {
+                                n.style.display = 'none';
+                            } else if (!close) {
+                                n.style.display = '';
+                            }
+                            
+                        }
+                        
+                    } else {
+                        break;
+                    }
+                    
+                } else {
+                    break;
+                }
+                
+            }
+            
+        }catch(e){console.log('changeRowsState',e);}
+        
+    }
+    
+    function collapsing (e) {
+    
+        try{
+    
+            var tg      = e.target,
+                cn      = tg.className,
+                close = (cn.indexOf('rmGOpen') > -1);
+            
+            if (cn.indexOf('rmCell') > -1) {
+            
+                if (cn.indexOf('rmCollapse') > -1) {
+                 
+                    if (close) {
+                        tg.className = cn.replace('rmGOpen','');
+                        tg.innerHTML = '+';
+                    } else {
+                        tg.className += ' rmGOpen';
+                        tg.innerHTML = '-';
+                    }
+                
+                    //subtaski
+                    if (tg.parentNode.className.indexOf('idnt-') > -1 ) {
+                        changeRowsState(
+                            e.target.parentNode, 
+                            getSubtaskIndent(tg.parentNode),
+                            close
+                        )
+                    } 
+                    //top task
+                    else {
+                        changeRowsState(e.target.parentNode, 1, close)
+                    }
+                    
+                }
+            
+                e.stopPropagation();
+            }
+        
+        }catch(e){console.log('collapsing', e);}
+    
+    }
+    
+    document.body.addEventListener('click', collapsing, false);
+    
+    //collapse by default
+    if (subtaskCollpsd) {
+    
+        for (var k in collapsable) {
+            collapsable[k].getElementsByTagName('td')[1].click();
+        }
+        
+    }
+    
 
 } catch (e) {console.log('avatars in list & collapsing', e);}
 
 //hiding time loging
 try{
 
-	if (timeLogsRemovd && document.body.className.indexOf('controller-timelog') == -1) {
-		var lt = getById('time_entry_comments');
-		lt.parentNode.parentNode.style.display = 'none';
-	}
+    if (timeLogsRemovd && document.body.className.indexOf('controller-timelog') == -1) {
+        var lt = getById('time_entry_comments');
+        lt.parentNode.parentNode.style.display = 'none';
+    }
 
 } catch (e) {console.log('hiding time logging', e);}
 
 //improved history log
 try{
 
-	if (newHistFotrmat) {
+    if (newHistFotrmat) {
 
-		var hist = getById('history'),
-			h4s  = hist.getElementsByTagName('h4'),
-			imgs = hist.getElementsByTagName('img'),
-			as, dva, lastMan, curMan;
-			
-		for (var i = 0, ci = imgs.length; i < ci; ++i) {
-			
-			if (h4s[i]) {
-			
-				h4s[i].innerHTML = h4s[i].innerHTML.replace(/Updated by|Uaktualnione przez/i, '');
-				
-				dva = createElement('div');
-				dva.className = 'rmHistoryDiv';
-				as = h4s[i].getElementsByTagName('a');
-				
-				curMan = as[as.length - 2].innerHTML;
-				if (lastMan == curMan) {
-					h4s[i].parentNode.className += ' rmHistoryShort '+ (i%2? 'rmHistoryDivOdd': '');
-				} else {
-					lastMan = curMan;
-				}
-				h4s[i].parentNode.className += (i%2? ' rmHistoryDivOdd': '');
-				
-				as[as.length - 1].className = 'rmDate';
-				as[as.length - 2].className = 'rmArchiver';
-				
-				dva.appendChild(as[as.length - 2]);
-				dva.lastChild.appendChild(createElement('br'));
-				dva.appendChild(as[as.length - 1]);
-				dva.appendChild(as[as.length - 1]);
-				dva.appendChild(h4s[i].lastChild);
-				dva.appendChild(as[as.length - 1]);
-				
-				h4s[i].appendChild(dva);
-				
-			}
-			
-			imgs[i].src = imgs[i].src.replace('&size=24', '&size=30');
-			
-		}
-	
-	}
+        var hist = getById('history'),
+            h4s  = hist.getElementsByTagName('h4'),
+            imgs = hist.getElementsByTagName('img'),
+            as, dva, lastMan, curMan;
+            
+        for (var i = 0, ci = imgs.length; i < ci; ++i) {
+            
+            if (h4s[i]) {
+            
+                h4s[i].innerHTML = h4s[i].innerHTML.replace(/Updated by|Uaktualnione przez/i, '');
+                
+                dva = createElement('div');
+                dva.className = 'rmHistoryDiv';
+                as = h4s[i].getElementsByTagName('a');
+                
+                curMan = as[as.length - 2].innerHTML;
+                if (lastMan == curMan) {
+                    h4s[i].parentNode.className += ' rmHistoryShort '+ (i%2? 'rmHistoryDivOdd': '');
+                } else {
+                    lastMan = curMan;
+                }
+                h4s[i].parentNode.className += (i%2? ' rmHistoryDivOdd': '');
+                
+                as[as.length - 1].className = 'rmDate';
+                as[as.length - 2].className = 'rmArchiver';
+                
+                dva.appendChild(as[as.length - 2]);
+                dva.lastChild.appendChild(createElement('br'));
+                dva.appendChild(as[as.length - 1]);
+                dva.appendChild(as[as.length - 1]);
+                dva.appendChild(h4s[i].lastChild);
+                dva.appendChild(as[as.length - 1]);
+                
+                h4s[i].appendChild(dva);
+                
+            }
+            
+            imgs[i].src = imgs[i].src.replace('&size=24', '&size=30');
+            
+        }
+    
+    }
 
 } catch (e) {console.log('improved history log', e);}
 
 //binding colors to tasks
 try {
-	
-	var CCC = ['#510000','#840000','#B70000','#EA0000','#515100','#848400','#B7B700','#EAEA00','#512800','#844200','#B75B00','#EA7500','#010B6D','#0D527A','#1271A8','#406CFF'];
-	if (document.body.className.indexOf('controller-issues') > -1) {
-		
-		var cmenu = getElementsByClassName('contextual', getById('content'))[0];
-		if (cmenu) {
-		
-			var wtextColor = createElement('div'),
-				wcolor  = createElement('div'),
-				wtext   = createElement('a'),
-				wselect = createElement('div');
-	
-			wtextColor.innerHTML = 'Color';
-			wcolor.className 	= "rmColorBox";
-			wtext.className  	= "rmColorBoxA";
-			wselect.className  	= "rmColorPicker dnone";
-		
-			var tmpWC = getStoredColor(numb);
-			if (tmpWC) {
-				wcolor.style.backgroundColor = tmpWC;
-			}
-		
-			wtext.onclick = function() {
-			
-				if (wselect.className.indexOf('dnone') > -1) {
-					wselect.className = wselect.className.replace('dnone','');
-				} else {
-					wselect.className += 'dnone';
-				}
-				
-			}
-		
-			for (var i = 0; i < CCC.length; ++i) {
-			
-				var tmp = createElement('div');
-				tmp.className = 'divPaltteColor';
-				tmp.style.backgroundColor = CCC[i];
-				wselect.appendChild(tmp);
-				tmp.onclick = function() {
-					
-					var ctm = getById('context-menu');
-					if (ctm && ctm.style.display == 'none') {
-						//from top menu
-						wcolor.style.backgroundColor = this.style.backgroundColor;
-						storeColor(
-							numb,
-							this.style.backgroundColor
-						);
-					} else {
-						//from right click menu
-						var selected = getElementsByClassName('context-menu-selection'), nu;
-						
-						for (var i = 0, ci = selected.length; i < ci; ++i) {
-							nu = parseInt(selected[i].className.match(/issue-[0-9]+/)[0].split('-')[1], 10);
-							storeColor(
-								'#' + nu,
-								this.style.backgroundColor
-							);
-							selected[i].className = selected[i].className.replace('context-menu-selection','');
-						}
-						
-					}
-					
-				}
-				
-			}
-		
-			wtext.appendChild(wcolor);
-			wtext.appendChild(wtextColor);
-			wtext.appendChild(wselect);
-			cmenu.appendChild(wtext);
-		} // /if cmenu
-	}
+    
+    var CCC = ['#510000','#840000','#B70000','#EA0000','#515100','#848400','#B7B700','#EAEA00','#512800','#844200','#B75B00','#EA7500','#010B6D','#0D527A','#1271A8','#406CFF'];
+    if (document.body.className.indexOf('controller-issues') > -1) {
+        
+        var cmenu = getElementsByClassName('contextual', getById('content'))[0];
+        if (cmenu) {
+        
+            var wtextColor = createElement('div'),
+                wcolor  = createElement('div'),
+                wtext   = createElement('a'),
+                wselect = createElement('div');
+    
+            wtextColor.innerHTML = 'Color';
+            wcolor.className     = "rmColorBox";
+            wtext.className      = "rmColorBoxA";
+            wselect.className      = "rmColorPicker dnone";
+        
+            var tmpWC = getStoredColor(numb);
+            if (tmpWC) {
+                wcolor.style.backgroundColor = tmpWC;
+            }
+        
+            wtext.onclick = function() {
+            
+                if (wselect.className.indexOf('dnone') > -1) {
+                    wselect.className = wselect.className.replace('dnone','');
+                } else {
+                    wselect.className += 'dnone';
+                }
+                
+            }
+        
+            for (var i = 0; i < CCC.length; ++i) {
+            
+                var tmp = createElement('div');
+                tmp.className = 'divPaltteColor';
+                tmp.style.backgroundColor = CCC[i];
+                wselect.appendChild(tmp);
+                tmp.onclick = function() {
+                    
+                    var ctm = getById('context-menu');
+                    if (ctm && ctm.style.display == 'none') {
+                        //from top menu
+                        wcolor.style.backgroundColor = this.style.backgroundColor;
+                        storeColor(
+                            numb,
+                            this.style.backgroundColor
+                        );
+                    } else {
+                        //from right click menu
+                        var selected = getElementsByClassName('context-menu-selection'), nu;
+                        
+                        for (var i = 0, ci = selected.length; i < ci; ++i) {
+                            nu = parseInt(selected[i].className.match(/issue-[0-9]+/)[0].split('-')[1], 10);
+                            storeColor(
+                                '#' + nu,
+                                this.style.backgroundColor
+                            );
+                            selected[i].className = selected[i].className.replace('context-menu-selection','');
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+        
+            wtext.appendChild(wcolor);
+            wtext.appendChild(wtextColor);
+            wtext.appendChild(wselect);
+            cmenu.appendChild(wtext);
+        } // /if cmenu
+    }
 
-	//hook to right mouse key
-	var scr = createElement('script'),
-		clk = createElement('button');
-	scr.type="text/javascript";
-	scr.innerHTML = 'window.parseStylesheets = function(){document.getElementById("cmOnclicker").onclick();}';
-	
-	clk.id = 'cmOnclicker';
-	clk.onclick=function(){
-		var contextMenu = getById('context-menu'),
-			ul = contextMenu.getElementsByTagName('ul')[0],
-			li = createElement('li');
-			
-		li.appendChild(wtext);
-		ul.appendChild(li);
-	}
-	
-	//
-	document.body.appendChild(clk);
-	document.body.appendChild(scr);
-	
+    //hook to right mouse key
+    var scr = createElement('script'),
+        clk = createElement('button');
+    scr.type="text/javascript";
+    scr.innerHTML = 'window.parseStylesheets = function(){document.getElementById("cmOnclicker").onclick();}';
+    
+    clk.id = 'cmOnclicker';
+    clk.onclick=function(){
+        var contextMenu = getById('context-menu'),
+            ul = contextMenu.getElementsByTagName('ul')[0],
+            li = createElement('li');
+            
+        li.appendChild(wtext);
+        ul.appendChild(li);
+    }
+    
+    //
+    document.body.appendChild(clk);
+    document.body.appendChild(scr);
+    
 } catch (e) {console.log('binding colors to tasks', e);}
 
 try {
-	
-	function addTimesToInput(input) {
-	
-		if (input.disabled) { return;}
-		var times = [0.5, 1, 2, 3, 5, 8, 13, 20];
-		var div = createElement('div');
-		input.parentNode.insertBefore(div, input);
-		div.className = 'rmTimesWrapper';
-		div.appendChild(input);
-		div.appendChild(document.createTextNode(' '));
-		
-		for (var i = 0, ci = times.length; i < ci; ++i) {
-			div.appendChild(createElement('input'));
-			div.lastChild.value 	= times[i];
-			div.lastChild.type 		= 'button';
-			div.lastChild.onclick	= function() {
-				input.value = parseFloat(this.value);
-			}
-		}
-		
-	}
+    
+    function addTimesToInput(input) {
+    
+        if (input.disabled) { return;}
+        var times = [0.5, 1, 2, 3, 5, 8, 13, 20];
+        var div = createElement('div');
+        input.parentNode.insertBefore(div, input);
+        div.className = 'rmTimesWrapper';
+        div.appendChild(input);
+        div.appendChild(document.createTextNode(' '));
+        
+        for (var i = 0, ci = times.length; i < ci; ++i) {
+            div.appendChild(createElement('input'));
+            div.lastChild.value     = times[i];
+            div.lastChild.type         = 'button';
+            div.lastChild.onclick    = function() {
+                input.value = parseFloat(this.value);
+            }
+        }
+        
+    }
 
-	if (showTimeButtons) {
-		addTimesToInput(getById('time_entry_hours'));
-		addTimesToInput(getById('issue_estimated_hours'));
-	}
+    if (showTimeButtons) {
+        addTimesToInput(getById('time_entry_hours'));
+        addTimesToInput(getById('issue_estimated_hours'));
+    }
 
 } catch (e) {console.log('adding time buttons', e);}
 
@@ -1455,110 +1455,110 @@ try {
         }
 
         if (rmSetts.className.indexOf('dnone') > -1) {
-		
+        
             rmSetts.className = rmSetts.className.replace('dnone','');
             this.className += ' rmOpened';
-			document.body.onmousemove = function(e) {
-				if (!isFirstChildOfSecond(e.target, rmSW) &&
-					e.target != rmSW
-				) {
-					rmSetts.click();
-				}
-			};
-			
+            document.body.onmousemove = function(e) {
+                if (!isFirstChildOfSecond(e.target, rmSW) &&
+                    e.target != rmSW
+                ) {
+                    rmSetts.click();
+                }
+            };
+            
         } else {
-		
-			document.body.onmousemove = function(){};
+        
+            document.body.onmousemove = function(){};
             rmSetts.className += ' dnone';
             this.className = this.className.replace('rmOpened','');
-			
+            
         }
         
     };
     
     rmSetts.className = 'rmSettings dnone';
-	
-	
+    
+    
     menuUl.parentNode.insertBefore(rmSW, menuUl);
     
     //opts
     var opts = [
         {setName: 'snf', description: 'Short surname (affect sorting)', defau:true},
-        {setName: 'sfh', description: 'Use floating header', 			defau:true},
-        {setName: 'sch', description: 'Coloured header', 				defau:true},
-        {setName: 'sma', description: 'Use medium avatars in list', 	defau:false},
-        {setName: 'sfn', description: 'Full name in tasks` list', 		defau:false},
-        {setName: 'sns', description: 'New subtask by CTRL+N', 			defau:true},
-        {setName: 'ssc', description: 'Subtasks collapsed by default', 	defau:false},
-        {setName: 'tlr', description: 'Remove time logs in edit', 		defau:true},
-        {setName: 'sce', description: 'CTRL+S with comments edits (see /1)', 	defau:false},
-        {setName: 'nhf', description: 'Short & fancy history layout', 	defau:true},
-        {setName: 'stb', description: 'Show time buttons(estimate/log time)', 	defau:true, nevv: true},
-		{description: '[save button]'},
-		{description: ''},
-		{description: '* * Other features * * *'},
-		{description: 'Going to search while typing numbers'},
-		{description: 'Ticket no. added to tag title (browser tab name)'},
-		{description: 'Ticket no. added to title of ticket'},
-		{description: 'Apostrophe to backtick (`) in title of ticket'},
-		{description: 'Shortcuts. Look at [shortcut_keys] clues'},
-		{description: 'Button 100% in Done'},
-		{description: 'Selects to buttons option'},
-		{description: 'Sorting by polish in Assignee'},
-		{description: 'Fancy information about blocking & duplicates'},
-		{description: 'Fancy information about suspended status'},
-		{description: 'Avatars in tasks lists'},
-		{description: 'Thumbnails of images'},
-		{description: 'Checking availability of new versions'},
-		{description: 'Collapsing groups in subtasks list'},
-		{description: 'Choosing color for tasks (for collapsing purpose)'},
-		{description: 'Priority colors on subtask & related lists', nevv: true},
-		{description: '/1 Comment edit has higher priority than ticket update'},
-		{description: '&nbsp;&nbsp;&nbsp;To save com. edit with shortcut you can`t have 2+ opened edits'}
-		
+        {setName: 'sfh', description: 'Use floating header',             defau:true},
+        {setName: 'sch', description: 'Coloured header',                 defau:true},
+        {setName: 'sma', description: 'Use medium avatars in list',     defau:false},
+        {setName: 'sfn', description: 'Full name in tasks` list',         defau:false},
+        {setName: 'sns', description: 'New subtask by CTRL+N',             defau:true},
+        {setName: 'ssc', description: 'Subtasks collapsed by default',     defau:false},
+        {setName: 'tlr', description: 'Remove time logs in edit',         defau:true},
+        {setName: 'sce', description: 'CTRL+S with comments edits (see /1)',     defau:false},
+        {setName: 'nhf', description: 'Short & fancy history layout',     defau:true},
+        {setName: 'stb', description: 'Show time buttons(estimate/log time)',     defau:true, nevv: true},
+        {description: '[save button]'},
+        {description: ''},
+        {description: '* * Other features * * *'},
+        {description: 'Going to search while typing numbers'},
+        {description: 'Ticket no. added to tag title (browser tab name)'},
+        {description: 'Ticket no. added to title of ticket'},
+        {description: 'Apostrophe to backtick (`) in title of ticket'},
+        {description: 'Shortcuts. Look at [shortcut_keys] clues'},
+        {description: 'Button 100% in Done'},
+        {description: 'Selects to buttons option'},
+        {description: 'Sorting by polish in Assignee'},
+        {description: 'Fancy information about blocking & duplicates'},
+        {description: 'Fancy information about suspended status'},
+        {description: 'Avatars in tasks lists'},
+        {description: 'Thumbnails of images'},
+        {description: 'Checking availability of new versions'},
+        {description: 'Collapsing groups in subtasks list'},
+        {description: 'Choosing color for tasks (for collapsing purpose)'},
+        {description: 'Priority colors on subtask & related lists', nevv: true},
+        {description: '/1 Comment edit has higher priority than ticket update'},
+        {description: '&nbsp;&nbsp;&nbsp;To save com. edit with shortcut you can`t have 2+ opened edits'}
+        
     ];
-	
+    
     //add options to settings
     for (var o in opts) {
         
         var pos = createElement('div'),
-			nev = '';
-			
-		if (opts[o].nevv) {
-			nev = '&nbsp;<span class="rmNew">new!</span>';
-		}
+            nev = '';
+            
+        if (opts[o].nevv) {
+            nev = '&nbsp;<span class="rmNew">new!</span>';
+        }
         
-		if (typeof opts[o].setName != 'undefined') {
-		
-			pos.className = typeof GM_getValue(opts[o].setName) == 'undefined' ? 
-								( opts[o].defau ? 'optOn' : 'optOff' ) : 
-								( GM_getValue(opts[o].setName) ? 'optOn' : 'optOff' );
-								
-			pos.innerHTML = '<span class="on">[#]</span><span class="off">[ ]</span><span> ' + opts[o].description + '</span>' + nev;
-			pos.onclick   = (function(setname) {
-				return function(e) {
-				
-					e.stopPropagation();
-				
-					var curVal = (this.className == 'optOn');
-					GM_setValue(setname, !curVal);
-					this.className = !curVal ? 'optOn' : 'optOff';
-					return false;
-					
-				};
-			})(opts[o].setName);
-			
-		} else if (opts[o].description == '[save button]') {
+        if (typeof opts[o].setName != 'undefined') {
+        
+            pos.className = typeof GM_getValue(opts[o].setName) == 'undefined' ? 
+                                ( opts[o].defau ? 'optOn' : 'optOff' ) : 
+                                ( GM_getValue(opts[o].setName) ? 'optOn' : 'optOff' );
+                                
+            pos.innerHTML = '<span class="on">[#]</span><span class="off">[ ]</span><span> ' + opts[o].description + '</span>' + nev;
+            pos.onclick   = (function(setname) {
+                return function(e) {
+                
+                    e.stopPropagation();
+                
+                    var curVal = (this.className == 'optOn');
+                    GM_setValue(setname, !curVal);
+                    this.className = !curVal ? 'optOn' : 'optOff';
+                    return false;
+                    
+                };
+            })(opts[o].setName);
+            
+        } else if (opts[o].description == '[save button]') {
 
-			pos.className  = 'rmSave';
-			pos.innerHTML  = 'Save (will reload page!)';
-			pos.onclick	= function(){ location.href = location.href; };
-			
-		} else if (opts[o].description == '') {
-			pos.innerHTML = '<span class="on">&nbsp;<span>';
-		} else {
-			pos.innerHTML = '<span class="on"> * </span><span>' + opts[o].description + '</span>' + nev;
-		}
+            pos.className  = 'rmSave';
+            pos.innerHTML  = 'Save (will reload page!)';
+            pos.onclick    = function(){ location.href = location.href; };
+            
+        } else if (opts[o].description == '') {
+            pos.innerHTML = '<span class="on">&nbsp;<span>';
+        } else {
+            pos.innerHTML = '<span class="on"> * </span><span>' + opts[o].description + '</span>' + nev;
+        }
         
         rmSetts.appendChild(pos);
         
@@ -1596,13 +1596,13 @@ try {
         }
         
         for (var i = 0, ci = elems.length; i < ci; ++i) {
-		
-			if ( elems[i].nodeName.toLowerCase() == 'input' ) {
-				elems[i].value += ' [' + key + ']';
-			} else {
-				elems[i].innerHTML += ' [' + key + ']';
-			}
-			
+        
+            if ( elems[i].nodeName.toLowerCase() == 'input' ) {
+                elems[i].value += ' [' + key + ']';
+            } else {
+                elems[i].innerHTML += ' [' + key + ']';
+            }
+            
         }
 
     }
@@ -1612,32 +1612,32 @@ try {
     addShortcutTo('n','.new-issue');
     try{addShortcutTo('r', getById('relations').getElementsByTagName('strong')[0]); }catch(e){}
     try{addShortcutTo('m', getById('issue_description_and_toolbar').parentNode.getElementsByTagName('label')[0]); }catch(e){}
-	try{addShortcutTo('k', getById('issue-form').getElementsByTagName('fieldset')[1].getElementsByTagName('legend')[0]); }catch(e){}
-	try{addShortcutTo('c', getById('issue-form').getElementsByTagName('fieldset')[2].getElementsByTagName('legend')[0]); }catch(e){}
-	
-	var bclass 	= document.body.className;
+    try{addShortcutTo('k', getById('issue-form').getElementsByTagName('fieldset')[1].getElementsByTagName('legend')[0]); }catch(e){}
+    try{addShortcutTo('c', getById('issue-form').getElementsByTagName('fieldset')[2].getElementsByTagName('legend')[0]); }catch(e){}
+    
+    var bclass     = document.body.className;
     try{ 
-		var ii = getById('issue-form').getElementsByTagName('input');
-			
-		if (bclass.indexOf('action-new') 	> -1 ||
-			bclass.indexOf('action-create') > -1
-		) {
-			addShortcutTo('ctrl+s', ii[ii.length-2]); 
-		} else {
-			addShortcutTo('ctrl+s', ii[ii.length-1]);
-		}
-	}catch(e){}
-	
-	try{ 
-		var mm = getById('move_form').getElementsByTagName('input');
-		addShortcutTo('ctrl+s', mm[mm.length-2]); 
-	}catch(e){}
-	
+        var ii = getById('issue-form').getElementsByTagName('input');
+            
+        if (bclass.indexOf('action-new')     > -1 ||
+            bclass.indexOf('action-create') > -1
+        ) {
+            addShortcutTo('ctrl+s', ii[ii.length-2]); 
+        } else {
+            addShortcutTo('ctrl+s', ii[ii.length-1]);
+        }
+    }catch(e){}
+    
+    try{ 
+        var mm = getById('move_form').getElementsByTagName('input');
+        addShortcutTo('ctrl+s', mm[mm.length-2]); 
+    }catch(e){}
+    
     try{
-		if (subtaskAsCtrlN) {
-			addShortcutTo('ctrl+n', getById('issue_tree').getElementsByTagName('strong')[0]);
-		}
-	}catch(e){}
+        if (subtaskAsCtrlN) {
+            addShortcutTo('ctrl+n', getById('issue_tree').getElementsByTagName('strong')[0]);
+        }
+    }catch(e){}
 
 }catch(e){console.log(e);}
 
