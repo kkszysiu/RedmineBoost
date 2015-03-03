@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name           RedMineBoost
 // @namespace      a
-// @include        http://redmine.csgbox.com*
-// @include        http://pm.csgbox.com*
-// @include        http://redmine-dev.csgbox.com*
+// @include        http://redmine.rebelmouse.com*
+// @include        https://redmine.rebelmouse.com*
 // @author         Pawel 'lord_t' Maruszczyk
-// @version        23.0
+// @version        24.0
 // @grant GM_setValue
 // @grant GM_getValue
 // @grant GM_addStyle
@@ -14,7 +13,7 @@
     
 //============================================================================================
 
-var ver = 'redminebooster.version.23';
+var ver = 'redminebooster.version.24';
 
 //== local GM storage 4 chrm
 if (typeof GM_deleteValue == 'undefined') {  
@@ -266,7 +265,7 @@ try {
 
 } catch (e) {console.log(e);}
 
-//doklejanie id ticketa do tytulu i do tagu title
+//adding ticket id to title and in title tag
 try {
 
     var c = getById('content'),
@@ -287,7 +286,7 @@ try {
     
 } catch(e) {console.log(e);}
 
-//wyswietlanie obrazkow jako ~miniatury
+//display images as miniatures
 try {
 
     var hrefs    = document.getElementsByTagName('a'),
@@ -981,43 +980,68 @@ try {
         
     }
     
+	//priority colors on subtask list
+	try {
+	
+		var col = getElementsByClassName('subject'),
+			cit = 0;
+		
+		for (var k in col) {
+		
+			var ahr = col[k].getElementsByTagName('a'),
+				prn = col[k].parentNode,
+				cla,
+				claPrior;
+				
+			if (ahr[0]) {
+			
+				cla = ahr[0].className;
+				claPrior = cla.match(/priority-[0-9]/gi);
+				if (claPrior && claPrior[0]) {
+					prn.className += ' ' + claPrior[0] + (cit%2 ? ' odd' : ' even');
+				}
+			
+			}
+			
+			cit++;
+		}
+		
+    } catch(e){console.log('priority colors on subtask list', e);}
+	
 	//avatars
 	try {
 	
-		//-for (var j in issues) {
+		var col = /*issues[j].*/getElementsByClassName('assigned_to');
+		for (var k in col) {
 		
-			var col = /*issues[j].*/getElementsByClassName('assigned_to');
-			for (var k in col) {
+			var ahr = col[k].getElementsByTagName('a'),
+				dv,
+				name;
+				
+			if (ahr[0]) {
 			
-				var ahr = col[k].getElementsByTagName('a'),
-					dv,
-					name;
-					
-				if (ahr[0]) {
+				name = ahr[0].firstChild.textContent;
+				dv = createElement('div');
+				dv.className = 'rmListAvatar' + (mediumAvatars ? 'Medium' : '');
+				dv.style = '';
 				
-					name = ahr[0].firstChild.textContent;
-					dv = createElement('div');
-					dv.className = 'rmListAvatar' + (mediumAvatars ? 'Medium' : '');
-					dv.style = '';
-					
-					if (fullName) {
-						if (mediumAvatars) {
-							dv.innerHTML = name.replace(/\s/, '<br>');
-						} else {
-							dv.innerHTML = name;
-						}
+				if (fullName) {
+					if (mediumAvatars) {
+						dv.innerHTML = name.replace(/\s/, '<br>');
 					} else {
-						dv.innerHTML = cutName(name, !nameFirst );
+						dv.innerHTML = name;
 					}
-
-					dv.style.backgroundImage = 'url(' + getGravatar( getCsgMail(name,1), mediumAvatars ? 28 : 20 ) + ')';
-					ahr[0].innerHTML = '';
-					ahr[0].appendChild(dv);
-				
+				} else {
+					dv.innerHTML = cutName(name, !nameFirst );
 				}
-				
+
+				dv.style.backgroundImage = 'url(' + getGravatar( getCsgMail(name,1), mediumAvatars ? 28 : 20 ) + ')';
+				ahr[0].innerHTML = '';
+				ahr[0].appendChild(dv);
+			
 			}
-		//-}
+			
+		}
 		
     } catch(e){console.log('avatars', e);}
     
@@ -1487,7 +1511,8 @@ try {
 		{description: 'Thumbnails of images'},
 		{description: 'Checking availability of new versions'},
 		{description: 'Collapsing groups in subtasks list'},
-		{description: 'Choosing color for tasks (for collapsing purpose)', nevv: true},
+		{description: 'Choosing color for tasks (for collapsing purpose)'},
+		{description: 'Priority colors on subtask & related lists', nevv: true},
 		{description: '/1 Comment edit has higher priority than ticket update'},
 		{description: '&nbsp;&nbsp;&nbsp;To save com. edit with shortcut you can`t have 2+ opened edits'}
 		
