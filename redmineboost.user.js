@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name           RedMineBoost
 // @namespace      a
-// @include        http://redmine.rebelmouse.com*
 // @include        https://redmine.rebelmouse.com*
-// @author         Pawel 'lord_t' Maruszczyk
-// @version        24.0
+// @author         Pawel 'lord_t' Maruszczyk, Krzysztof 'kkszysiu' Klinikowski
+// @version        25.0
 // @grant GM_setValue
 // @grant GM_getValue
 // @grant GM_addStyle
@@ -13,7 +12,7 @@
     
 //============================================================================================
 
-var ver = 'redminebooster.version.24';
+var ver = 'redminebooster.version.25';
 
 //== local GM storage 4 chrm
 if (typeof GM_deleteValue == 'undefined') {  
@@ -557,6 +556,7 @@ try {
     
 } catch(e) {console.log(e);}
 
+/*
 //update checker
 try {
 
@@ -573,6 +573,7 @@ try {
                     '<img class="dnone" src="' + updateUrl + '" onerror="this.parentNode.firstChild.className+=\' rmNewVersionAvailable\';" >';
 
 }catch(e){console.log(e);}
+*/
 
 //order selects
 try {
@@ -1483,17 +1484,17 @@ try {
     
     //opts
     var opts = [
-        {setName: 'snf', description: 'Short surname (affect sorting)', defau:true},
-        {setName: 'sfh', description: 'Use floating header',             defau:true},
-        {setName: 'sch', description: 'Coloured header',                 defau:true},
-        {setName: 'sma', description: 'Use medium avatars in list',     defau:false},
-        {setName: 'sfn', description: 'Full name in tasks` list',         defau:false},
-        {setName: 'sns', description: 'New subtask by CTRL+N',             defau:true},
-        {setName: 'ssc', description: 'Subtasks collapsed by default',     defau:false},
-        {setName: 'tlr', description: 'Remove time logs in edit',         defau:true},
-        {setName: 'sce', description: 'CTRL+S with comments edits (see /1)',     defau:false},
-        {setName: 'nhf', description: 'Short & fancy history layout',     defau:true},
-        {setName: 'stb', description: 'Show time buttons(estimate/log time)',     defau:true, nevv: true},
+        {setName: 'snf', description: 'Short surname (affect sorting)',             defau:false},
+        {setName: 'sfh', description: 'Use floating header',                        defau:true},
+        {setName: 'sch', description: 'Coloured header',                            defau:false},
+        {setName: 'sma', description: 'Use medium avatars in list',                 defau:false},
+        {setName: 'sfn', description: 'Full name in tasks` list',                   defau:true},
+        {setName: 'sns', description: 'New subtask by CTRL+N',                      defau:true},
+        {setName: 'ssc', description: 'Subtasks collapsed by default',              defau:false},
+        {setName: 'tlr', description: 'Remove time logs in edit',                   defau:true},
+        {setName: 'sce', description: 'CTRL+S with comments edits (see /1)',        defau:false},
+        {setName: 'nhf', description: 'Short & fancy history layout',               defau:true},
+        {setName: 'stb', description: 'Show time buttons(estimate/log time)',       defau:true, nevv: true},
         {description: '[save button]'},
         {description: ''},
         {description: '* * Other features * * *'},
