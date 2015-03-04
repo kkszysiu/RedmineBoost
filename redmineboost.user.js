@@ -189,6 +189,7 @@ try {
     var s = createElement('div'), v;
     document.body.appendChild(s);
     v = '<style type="text/css">';
+    v += '#history ul.details {list-style-type: none;}';
     v += '.rmCell{width:14px;color:black;text-shadow:-1px -1px #fff;cursor:auto;}.rmCollapse{cursor:pointer;}';
     v += '#rmSaving{border-bottom: 1px solid gray;position:fixed; top:0; left:0px; width:100%;line-height:30px; height:30px; text-align:center; background:white; z-index:1002;}';
     v += '#rmSaving img{margin-right:10px;}.cmOnclicker{display:none;}';
@@ -237,7 +238,7 @@ try {
     }
     
     if (newHistFotrmat) {
-        v += '#history h4{width:230px; float:left; margin:0; padding:0;}';
+        v += '#history h4{width:230px; float:left; margin:0; padding:0; border-bottom: 0;}';
         v += '#history .journal{margin:0; padding:0; }';
         v += '#history .details{width:auto; margin:0; padding:0 0 0 240px;}';
         v += '#history h4 img.gravatar{border:#eee solid; border-width:0 1px 1px 1px; margin:0 0 1px; float:left;}';
