@@ -189,7 +189,6 @@ try {
     var s = createElement('div'), v;
     document.body.appendChild(s);
     v = '<style type="text/css">';
-    v += '#history ul.details {list-style-type: none;}';
     v += '.rmCell{width:14px;color:black;text-shadow:-1px -1px #fff;cursor:auto;}.rmCollapse{cursor:pointer;}';
     v += '#rmSaving{border-bottom: 1px solid gray;position:fixed; top:0; left:0px; width:100%;line-height:30px; height:30px; text-align:center; background:white; z-index:1002;}';
     v += '#rmSaving img{margin-right:10px;}.cmOnclicker{display:none;}';
@@ -234,10 +233,11 @@ try {
         v += '#account{padding-right:11px;}';
         v += '#wrapper2{padding-top:87px;}';
         v += '#top-menu{position: fixed !important; top:0em;width:99%;}';
-        v += '#header{position: fixed !important; top:1.6em;width:99%;border-bottom:6px solid #eee;} ';
+        v += '#header{position: fixed !important; top:1.6em;width:99%;border-bottom:6px solid #eee; padding: 4px 8px 0px 6px;} ';
     }
     
     if (newHistFotrmat) {
+        v += '#history ul.details {list-style-type: none;}';
         v += '#history h4{width:230px; float:left; margin:0; padding:0; border-bottom: 0;}';
         v += '#history .journal{margin:0; padding:0; }';
         v += '#history .details{width:auto; margin:0; padding:0 0 0 240px;}';
@@ -1494,7 +1494,7 @@ try {
         {setName: 'ssc', description: 'Subtasks collapsed by default',              defau:false},
         {setName: 'tlr', description: 'Remove time logs in edit',                   defau:true},
         {setName: 'sce', description: 'CTRL+S with comments edits (see /1)',        defau:false},
-        {setName: 'nhf', description: 'Short & fancy history layout',               defau:true},
+        {setName: 'nhf', description: 'Short & fancy history layout',               defau:false},
         {setName: 'stb', description: 'Show time buttons(estimate/log time)',       defau:true, nevv: true},
         {description: '[save button]'},
         {description: ''},
