@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "content_scripts": [ {
+        "exclude_globs":    [  ],
+        "include_globs":    [ "*" ],
+        "js":               [ "redmineboost.user.js" ],
+        "matches":          [   "http://redmine.rebelmouse.com/*",
+                                "https://redmine.rebelmouse.com/*"
+                            ],
+        "run_at": "document_end"
+    } ],
+    "converted_from_user_script": true,
+    "description":  "This is Redmine booster extension for RebelMouse!",
+    "name":         "RedmineBoost for RebelMouse",
+    "version":      "25"
+}
