@@ -13,5 +13,5 @@
     "description":  "This is Redmine booster extension for RebelMouse!",
     "name":         "RedmineBoost for RebelMouse",
     "icons":        {"16": "icon_16.png", "128": "icon_128.png"},
-    "version":      "25"
+    "version":      "26"
 }
