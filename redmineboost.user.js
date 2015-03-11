@@ -3,7 +3,7 @@
 // @namespace      a
 // @include        https://redmine.rebelmouse.com*
 // @author         Pawel 'lord_t' Maruszczyk, Krzysztof 'kkszysiu' Klinikowski
-// @version        25.0
+// @version        26.0
 // @grant GM_setValue
 // @grant GM_getValue
 // @grant GM_addStyle
@@ -12,7 +12,7 @@
     
 //============================================================================================
 
-var ver = 'redminebooster.version.25';
+var ver = 'redminebooster.version.26';
 
 //== local GM storage 4 chrm
 if (typeof GM_deleteValue == 'undefined') {  
@@ -37,17 +37,18 @@ function getStoredValue(setingName, defau) {
 }
 
 //settings
-var nameFirst         = getStoredValue('snf', true);
-var fixedHeader        = getStoredValue('sfh', true);
-var colouredHeader    = getStoredValue('sch', true);
+var nameFirst         = getStoredValue('snf', false);
+var fixedHeader       = getStoredValue('sfh', true);
+var colouredHeader    = getStoredValue('sch', false);
 var mediumAvatars     = getStoredValue('sma', false);
-var fullName        = getStoredValue('sfn', false);
+var fullName          = getStoredValue('sfn', true);
 var subtaskAsCtrlN    = getStoredValue('sns', true);
 var subtaskCollpsd    = getStoredValue('ssc', false);
 var timeLogsRemovd    = getStoredValue('tlr', true);
 var savingComEdits    = getStoredValue('sce', false);
-var newHistFotrmat    = getStoredValue('nhf', true);
-var showTimeButtons    = getStoredValue('stb', true);
+var newHistFotrmat    = getStoredValue('nhf', false);
+var showTimeButtons   = getStoredValue('stb', true);
+var showAsigneeAutocomplete     = getStoredValue('saa', false);
 
 //colors
 var memoryKey = 'colors2';
@@ -125,7 +126,7 @@ function getRebelmouseMail(name, name1st) {
 
 function getGravatar(mail, size) {
     size = size || 18;
-    return 'http://s.gravatar.com/avatar/' + MD5(mail)+ '?s=' + size;
+    return 'https://s.gravatar.com/avatar/' + MD5(mail)+ '?s=' + size;
 }
 
 function showSaving() {
@@ -285,6 +286,7 @@ try {
     if (titl) {    titl.innerHTML = numb + ' ' + titl.innerHTML; }
     
 } catch(e) {console.log(e);}
+
 
 //display images as miniatures
 try {
@@ -557,31 +559,12 @@ try {
     
 } catch(e) {console.log(e);}
 
-/*
-//update checker
-try {
-
-    var updateUrl   = 'http://hrabstwo.net/hornet/js/' + ver,
-        aliveUrl    = 'http://hrabstwo.net/hornet/js/redminebooster.alive.gif',
-        fileUrl     = 'http://hrabstwo.net/hornet/js/redmineboost.user.js',
-        scr         = createElement('div');
-        
-    getById('top-menu').appendChild(scr);
-
-    scr.innerHTML = '<div class="dnone">' +
-                    '<a href="' + fileUrl + '">Download RedmineBoost update (click & install)!</a></div>' +
-                    '<img class="dnone" src="' + aliveUrl  + '" onerror="this.parentNode.firstChild.className+=\' rmServerOffline\';" >' +
-                    '<img class="dnone" src="' + updateUrl + '" onerror="this.parentNode.firstChild.className+=\' rmNewVersionAvailable\';" >';
-
-}catch(e){console.log(e);}
-*/
-
 //order selects
 try {
 
 function orderSelect(selectElemID) {
 
-    var alphabet = '&>AĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻaąbcćdeęfghijklłmnńoóprsśtuwxyz',
+    var alphabet = '&>AĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUVWYZŹŻaąbcćdeęfghijklłmnńoóprsśtuvwxyz',
         se = document.getElementById(selectElemID),
         op,
         oa  = [];
@@ -1441,6 +1424,70 @@ try {
 
 } catch (e) {console.log('adding time buttons', e);}
 
+try {
+    
+    function showAsigneeAutocompleteInput(input) {
+    
+        if (input.disabled) { return;}
+
+        var selme = getById('issue_assigned_to_id_cont');
+
+        var div = createElement('div');
+        input.parentNode.insertBefore(div, input);
+        div.className = 'rmAutocompleteInput';
+        div.appendChild(input);
+        div.appendChild(document.createTextNode(' '));
+
+        var span = createElement('span'),
+            datalist = createElement('datalist'),
+            inputAssigneAutocomplete = createElement('input');
+
+        div.appendChild(span);
+
+        datalist.id = 'assigned_autocompletes';
+        datalist.name = 'assigned_autocompletes';
+
+        //inputAssigneAutocomplete.list = 'assigned_autocompletes';
+        inputAssigneAutocomplete.setAttribute('list', 'assigned_autocompletes');
+        inputAssigneAutocomplete.name = 'assigned_autocomplete_input';
+        inputAssigneAutocomplete.id = 'assigned_autocomplete_input';
+
+        span.appendChild(inputAssigneAutocomplete);
+        //<input list="browsers" name="browser">
+        span.appendChild(datalist);
+
+        for (var i = 0; i < selme.childNodes.length; ++i) {
+            var opt = selme.childNodes[i],
+                optionelem = createElement('option');
+            optionelem.value = opt.value;
+            datalist.appendChild(optionelem);
+        }
+
+        //span.innerHTML = '<datalist name="assigned_autocomplete" id="assigned_autocomplete"/><br>';
+        var input = document.querySelector('#assigned_autocomplete_input');
+
+        input.addEventListener('input', function() {
+            if (input.value.length > 3) {
+                for (var i = 0; i < selme.childNodes.length; ++i) {
+                    var opt = selme.childNodes[i];
+
+                    if (opt.value == input.value) {
+                        //var selectElement = form.querySelector('input[name="pwd"]');
+                        opt.className = 'asi butSelected';
+                        console.log('matches!');
+                    }
+                }
+            }
+        });
+    }
+
+    if (showAsigneeAutocomplete && allButtonsGlob.issue_assigned_to_id === false) {
+        showAsigneeAutocompleteInput(getById('issue_assigned_to_id'));
+    }
+
+} catch (e) {console.log('assigne autocomplete input', e);}
+
+
 //script panel
 try {
 
@@ -1487,7 +1534,7 @@ try {
     var opts = [
         {setName: 'snf', description: 'Short surname (affect sorting)',             defau:false},
         {setName: 'sfh', description: 'Use floating header',                        defau:true},
-        {setName: 'sch', description: 'Coloured header',                            defau:false},
+        {setName: 'sch', description: 'Colored header',                             defau:false},
         {setName: 'sma', description: 'Use medium avatars in list',                 defau:false},
         {setName: 'sfn', description: 'Full name in tasks` list',                   defau:true},
         {setName: 'sns', description: 'New subtask by CTRL+N',                      defau:true},
@@ -1495,7 +1542,9 @@ try {
         {setName: 'tlr', description: 'Remove time logs in edit',                   defau:true},
         {setName: 'sce', description: 'CTRL+S with comments edits (see /1)',        defau:false},
         {setName: 'nhf', description: 'Short & fancy history layout',               defau:false},
-        {setName: 'stb', description: 'Show time buttons(estimate/log time)',       defau:true, nevv: true},
+        {setName: 'stb', description: 'Show time buttons(estimate/log time)',       defau:true},
+        {setName: 'saa', description: 'Show asginee autocomplete input',            defau:false, nevv: true},
+
         {description: '[save button]'},
         {description: ''},
         {description: '* * Other features * * *'},
