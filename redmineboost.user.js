@@ -118,14 +118,14 @@ function getRebelmouseMail(name, name1st) {
     if (!name1st) {
         n = n.split(' ').reverse().join(' ');
     }
-    
+
     return replacePL(n.replace(' ','.').toLowerCase()).replace(/[^\.a-z]/g,'') + '@rebelmouse.com';
     
 }
 
 function getGravatar(mail, size) {
     size = size || 18;
-    return 'http://www.gravatar.com/avatar/' + MD5(mail)+ '?rating=PG&size=' + size;
+    return 'http://s.gravatar.com/avatar/' + MD5(mail)+ '?s=' + size;
 }
 
 function showSaving() {
